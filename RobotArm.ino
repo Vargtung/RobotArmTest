@@ -23,16 +23,17 @@ void setup(){
   base.setMaxSpeed(1000.0);
   base.setAcceleration(100.0);
   base.setSpeed(200);
+  base.setCurrentPosition(0);
+  printf("lul");
 }
 
 void loop(){
-  delay(10);
-  base.moveTo(2000);
+  //base.moveTo(2000);
   buttonState = digitalRead(buttonPin);
   
   if(buttonState == HIGH){    
     if(prevState == 0){
-      if (ledState == 1){
+      if (ledState == 1){//Inverting the current LEDsignal
         ledState = 0;
       }
       else{
@@ -45,12 +46,15 @@ void loop(){
     prevState = 0;
   }
   
-  if (ledState == 1) {
+  if (ledState == 1) {//Interacts with the stepper motor.
     // turn LED on:
      digitalWrite(LED_BUILTIN, HIGH);
-     base.run();
+     base.setSpeed(500);
+     base.runSpeed();
   } else {
     // turn LED off:
+    base.setSpeed(-500);
+    base.runSpeed();
     digitalWrite(LED_BUILTIN, LOW);
   }
 }
